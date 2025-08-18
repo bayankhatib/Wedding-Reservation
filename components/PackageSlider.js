@@ -9,9 +9,7 @@ import {
 } from 'react-native';
 import CustomText from './CustomText';
 import { Colors } from '../constants/Colors';
-import BronzePackageIcon from '../assets/icons/bronze-package.svg';
-import SilverPackageIcon from '../assets/icons/silver-package.svg';
-import GoldPackageIcon from '../assets/icons/gold-package.svg';
+// SVG package icons removed - using gold.png image instead
 import packagesData from '../constants/packageDate';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -78,18 +76,20 @@ const PackageSlider = ({ visible, onClose, selectedPackage, onSubscribe }) => {
                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
                 pressRetentionOffset={{ top: 20, bottom: 20, left: 20, right: 20 }}
               >
-                {/* Header with Purple Cover and Package Image */}
+                {/* Header with Package-Specific Image */}
                 <View style={styles.cardHeader}>
                   <View style={styles.purpleHeaderCover}>
-                    <View style={styles.offerCardPackageIcon}>
-                      {selectedPackage?.id === 3 ? (
-                        <GoldPackageIcon style={styles.offerCardPackageImage} />
-                      ) : selectedPackage?.id === 2 ? (
-                        <SilverPackageIcon style={styles.offerCardPackageImage} />
-                      ) : (
-                        <BronzePackageIcon style={styles.offerCardPackageImage} />
-                      )}
-                    </View>
+                    <Image 
+                      source={
+                        selectedPackage?.id === 3 
+                          ? require('../assets/gold.png')
+                          : selectedPackage?.id === 2 
+                          ? require('../assets/silver.png')
+                          : require('../assets/bronze.png')
+                      } 
+                      style={styles.headerImage}
+                      resizeMode="cover"
+                    />
                   </View>
                 </View>
                 
@@ -99,7 +99,7 @@ const PackageSlider = ({ visible, onClose, selectedPackage, onSubscribe }) => {
                   {/* Duration Section */}
                   <View style={styles.durationSection}>
                     <View style={styles.durationContainer}>
-                      <CustomText style={styles.modalDuration}>
+                      <CustomText style={[styles.modalDuration, { fontFamily: 'AdventPro' }]}>
                         {offer.duration?.split(' ')[0] || '24'}
                       </CustomText>
                       <CustomText style={styles.durationSeparator}>/</CustomText>
@@ -109,7 +109,7 @@ const PackageSlider = ({ visible, onClose, selectedPackage, onSubscribe }) => {
 
                   {/* Total Price */}
                   <View style={styles.priceSection}>
-                    <CustomText style={styles.modalTotalPrice}>
+                    <CustomText style={[styles.modalTotalPrice, { fontFamily: 'AdventPro' }]}>
                       {offer.totalPrice || '9,000'}
                     </CustomText>
                     <CustomText style={styles.modalInstallmentText}>مع قسط شهري</CustomText>
@@ -117,7 +117,7 @@ const PackageSlider = ({ visible, onClose, selectedPackage, onSubscribe }) => {
                   
                   {/* Monthly Price */}
                   <View style={styles.monthlySection}>
-                    <CustomText style={styles.modalMonthlyPrice}>
+                    <CustomText style={[styles.modalMonthlyPrice, { fontFamily: 'AdventPro' }]}>
                       {offer.monthlyPrice || '375'}
                     </CustomText>
                   </View>
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.5,
     marginHorizontal: -30,
     borderRadius: 20,
-    overflow: 'hidden',
+    overflow: 'visible',
     position: 'absolute',
     // Mobile touch optimizations
     backfaceVisibility: 'hidden',
@@ -271,6 +271,7 @@ const styles = StyleSheet.create({
     left: 0,
     borderRadius: 20,
     backgroundColor: '#FFF8E1',
+    zIndex: -1,
   },
   purpleBanner: {
     position: 'absolute',
@@ -458,24 +459,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   purpleHeaderCover: {
-    width: '100%',
-    height: '80%',
-    backgroundColor: '#f4d376',
+    width: 120,
+    height: 80,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
   },
-  offerCardPackageIcon: {
-    width: 170,
-    height: 170,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
-  offerCardPackageImage: {
+  headerImage: {
     width: '100%',
     height: '100%',
     borderRadius: 30,

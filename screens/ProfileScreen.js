@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import { Colors } from '../constants/Colors';
 import CustomText from '../components/CustomText';
-import { Ionicons } from '@expo/vector-icons';
-import BottomTabNavigator from '../components/BottomTabNavigator';
+import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { useUser } from '../contexts/UserContext';
 import { useFollow } from '../contexts/FollowContext';
 import NotificationsModal from '../components/NotificationsModal';
 import { useNotifications } from '../contexts/NotificationsContext';
+import BottomTabNavigator from '../components/BottomTabNavigator';
 
 const ProfileScreen = ({ navigation }) => {
   const { userData, updateProfile } = useUser();
@@ -94,7 +94,7 @@ const ProfileScreen = ({ navigation }) => {
         onPress={() => removeFollowedPartner(partner.id)}
       >
         <CustomText style={styles.followedButtonText}>متابع</CustomText>
-        <Ionicons name="person" size={14} color={Colors.primaryDark} />
+        <Icon name="person" size={14} color={Colors.primaryDark} />
       </TouchableOpacity>
     </View>
   );
@@ -121,10 +121,10 @@ const ProfileScreen = ({ navigation }) => {
               markNotificationsAsRead();
             }}
           >
-            <Ionicons name="notifications-outline" size={24} color={Colors.primaryDark} />
+            <Icon name="notifications-outline" size={24} color={Colors.primaryDark} />
             {!notificationsRead && (
               <View style={styles.notificationBadge}>
-                <CustomText style={styles.badgeText}>2</CustomText>
+                <CustomText style={[styles.badgeText, { fontFamily: 'AdventPro' }]}>2</CustomText>
               </View>
             )}
           </TouchableOpacity>
@@ -147,7 +147,7 @@ const ProfileScreen = ({ navigation }) => {
               {profileImage ? (
                 <Image source={{ uri: profileImage }} style={styles.profileImage} />
               ) : (
-                <Ionicons name="person" size={40} color="#CCCCCC" />
+                <Icon name="person" size={40} color="#CCCCCC" />
               )}
             </View>
           </View>
@@ -190,7 +190,7 @@ const ProfileScreen = ({ navigation }) => {
                 style={styles.closeButton}
                 onPress={() => setShowEditForm(false)}
               >
-                <Ionicons name="close" size={24} color={Colors.primaryDark} />
+                <Icon name="close" size={24} color={Colors.primaryDark} />
               </TouchableOpacity>
             </View>
 
@@ -203,7 +203,7 @@ const ProfileScreen = ({ navigation }) => {
                     <Image source={{ uri: profileImage }} style={styles.uploadedImage} />
                   ) : (
                     <View style={styles.uploadPlaceholder}>
-                      <Ionicons name="camera" size={30} color={Colors.primary} />
+                      <Icon name="camera" size={30} color={Colors.primary} />
                       <CustomText style={styles.uploadText}>إضافة صورة</CustomText>
                     </View>
                   )}

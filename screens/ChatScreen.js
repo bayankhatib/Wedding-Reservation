@@ -10,7 +10,7 @@ import {
   Platform,
   Image,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../components/CustomText';
 import { Colors } from '../constants/Colors';
 import BottomTabNavigator from '../components/BottomTabNavigator';
@@ -135,7 +135,8 @@ const ChatScreen = ({ navigation, route }) => {
       </View>
               <CustomText style={[
           styles.timestamp,
-          message.isIncoming ? styles.incomingTimestamp : styles.outgoingTimestamp
+          message.isIncoming ? styles.incomingTimestamp : styles.outgoingTimestamp,
+          { fontFamily: 'VIPRawyThin' }
         ]}>
           {formatTime(message.timestamp)}
         </CustomText>
@@ -150,7 +151,7 @@ const ChatScreen = ({ navigation, route }) => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.primaryDark} />
+          <Icon name="arrow-back" size={24} color={Colors.primaryDark} />
         </TouchableOpacity>
         
         <View style={styles.partnerInfo}>
@@ -196,7 +197,7 @@ const ChatScreen = ({ navigation, route }) => {
             onPress={sendMessage}
             disabled={!inputText.trim()}
           >
-            <Ionicons 
+            <Icon 
               name="paper-plane" 
               size={20} 
               color={Colors.primaryDark} 
@@ -209,7 +210,7 @@ const ChatScreen = ({ navigation, route }) => {
       {/* Bottom Navigation */}
       <View style={styles.bottomNavContainer}>
         <BottomTabNavigator 
-          state={{ index: 0 }} 
+          state={{ index: 4 }} 
           navigation={navigation} 
         />
       </View>
@@ -222,6 +223,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fffdf7',
     position: 'relative',
+  },
+  safeArea: {
+    flex: 1,
   },
   header: {
     backgroundColor: '#f4eac1',
@@ -326,8 +330,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   messageBubble: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    padding: 15,
     borderRadius: 15,
     marginBottom: 5,
     shadowColor: '#000',
@@ -421,8 +424,23 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3,
-    zIndex: 1000,
+    elevation: 5,
+    zIndex: 9999,
+  },
+  partnerLogoImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 20,
+  },
+  messagePartnerLogoImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 12,
+  },
+  messagePartnerLogoText: {
+    color: Colors.white,
+    fontSize: 10,
+    fontWeight: 'bold',
   },
 });
 

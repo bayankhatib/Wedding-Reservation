@@ -3,36 +3,57 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
+  ScrollView,
   TouchableOpacity,
   Image,
-  ScrollView,
+  Dimensions,
+  Modal,
+  Alert
 } from 'react-native';
-import CustomText from '../components/CustomText';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
+import CustomText from '../components/CustomText';
 import BottomTabNavigator from '../components/BottomTabNavigator';
 import { getSubscribedPackages } from '../constants/SubscribedPackages';
 
 const InstallmentPackagesScreen = ({ navigation, route }) => {
   const [refreshKey, setRefreshKey] = useState(0);
+  const [subscribedPackages, setSubscribedPackages] = useState([]);
   
   // Get all subscribed packages from global constant
-  const subscribedPackages = getSubscribedPackages() || [];
-
+  const loadSubscribedPackages = () => {
+    const packages = getSubscribedPackages();
+    console.log('Loading subscribed packages:', packages);
+    setSubscribedPackages(packages);
+  };
 
   // Refresh when screen comes into focus
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      setRefreshKey(prev => prev + 1);
+      loadSubscribedPackages();
     });
 
     return unsubscribe;
   }, [navigation]);
 
+  // Load packages on component mount
+  useEffect(() => {
+    loadSubscribedPackages();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <CustomText style={styles.headerTitle}>حزم التقسيط الفعالة</CustomText>
+        <View style={styles.headerContent}>
+          <CustomText style={styles.headerTitle}>حزم التقسيط الفعالة</CustomText>
+          <TouchableOpacity 
+            style={styles.refreshButton}
+            onPress={loadSubscribedPackages}
+          >
+            <Icon name="refresh" size={24} color={Colors.primaryDark} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Package Cards Container */}
@@ -151,6 +172,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   backButton: {
     padding: 8,
   },
@@ -162,6 +189,9 @@ const styles = StyleSheet.create({
   },
   headerSpacer: {
     width: 40,
+  },
+  refreshButton: {
+    padding: 8,
   },
   packageCardsContainer: {
     padding: 20,

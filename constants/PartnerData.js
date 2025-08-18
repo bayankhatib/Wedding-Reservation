@@ -11,7 +11,6 @@ export const PartnerDetails = {
     services: 'حفلات زفاف، حفلات خطوبة، حفلات أعياد ميلاد',
     location: 'عمان، الأردن',
     price: '1500 دينار',
-    discount: '25%',
     logo: require('../assets/partnersLogo/ayass_hotel.jpg'),
     gallery: [
       { type: 'image', source: require('../assets/partners/ayass/photos/photo_2025-08-04_02-33-32.jpg') },
@@ -49,7 +48,6 @@ export const PartnerDetails = {
     services: 'حفلات زفاف، حفلات خطوبة خارجية',
     location: 'عمان، الأردن',
     price: '1200 دينار',
-    discount: '30%',
     logo: require('../assets/partnersLogo/bebek.jpg'),
     gallery: [
       { type: 'image', source: require('../assets/partners/bebek/photos/photo_2025-08-04_02-55-28.jpg') },

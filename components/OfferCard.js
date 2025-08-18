@@ -6,12 +6,10 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from './CustomText';
 import { Colors } from '../constants/Colors';
-import BronzePackageIcon from '../assets/icons/bronze-package.svg';
-import SilverPackageIcon from '../assets/icons/silver-package.svg';
-import GoldPackageIcon from '../assets/icons/gold-package.svg';
+// SVG package icons removed - using package-specific images instead
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -49,15 +47,17 @@ const OfferCard = ({
         {/* Offer Card Header */}
         <View style={styles.offerCardHeader}>
           <View style={styles.offerCardHeaderCover}>
-            <View style={styles.offerCardPackageIcon}>
-              {selectedPackage?.id === 3 ? (
-                <GoldPackageIcon style={styles.offerCardPackageImage} />
-              ) : selectedPackage?.id === 2 ? (
-                <SilverPackageIcon style={styles.offerCardPackageImage} />
-              ) : (
-                <BronzePackageIcon style={styles.offerCardPackageImage} />
-              )}
-            </View>
+                                <Image 
+                      source={
+                        selectedPackage?.id === 3 
+                          ? require('../assets/gold.png')
+                          : selectedPackage?.id === 2 
+                          ? require('../assets/silver.png')
+                          : require('../assets/bronze.png')
+                      } 
+                      style={styles.offerCardPackageImage}
+                      resizeMode="contain"
+                    />
           </View>
         </View>
 
@@ -66,7 +66,7 @@ const OfferCard = ({
           {/* Duration Section */}
           <View style={styles.offerDurationSection}>
             <View style={styles.offerDurationContainer}>
-              <CustomText style={styles.offerDuration}>
+              <CustomText style={[styles.offerDuration, { fontFamily: 'AdventPro' }]}>
                 {selectedOffer.duration?.split(' ')[0] || '24'}
               </CustomText>
               <CustomText style={styles.offerDurationSeparator}>/</CustomText>
@@ -76,7 +76,7 @@ const OfferCard = ({
           {/* Monthly Price */}
           <View style={styles.offerMonthlySection}>
           <CustomText style={styles.offerInstallmentText}>مع قسط شهري</CustomText>
-            <CustomText style={styles.offerMonthlyPrice}>
+            <CustomText style={[styles.offerMonthlyPrice, { fontFamily: 'AdventPro' }]}>
               {selectedOffer.monthlyPrice || '375'}
             </CustomText>
           </View>
@@ -94,7 +94,7 @@ const OfferCard = ({
                 </CustomText>
               </View>
               <View style={styles.dropdownArrow}>
-                <Ionicons name="chevron-down" size={20} color="#6A1B9A" />
+                <Icon name="chevron-down" size={20} color="#6A1B9A" />
               </View>
             </TouchableOpacity>
           </View>
@@ -103,7 +103,7 @@ const OfferCard = ({
           <View style={styles.installmentSection}>
             <CustomText style={styles.installmentLabel}>مبلغ القسط</CustomText>
              {/* Total Price Section */}
-            <CustomText style={styles.offerTotalPrice}>
+            <CustomText style={[styles.offerTotalPrice, { fontFamily: 'AdventPro' }]}>
             {selectedOffer.totalPrice}
             </CustomText>
           </View>
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   offerCardHeader: {
     position: 'absolute',
-    top: 0,
+    top: -15,
     left: 0,
     right: 0,
     height: 100,
@@ -201,25 +201,17 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   offerCardHeaderCover: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#f4eac1',
+    width: 140,
+    height: 110,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  offerCardPackageIcon: {
-    width: 200,
-    height: 200,
-    borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
+// offerCardPackageIcon style removed - no longer needed
   offerCardPackageImage: {
     width: '100%',
     height: '100%',
-    borderRadius: 60,
+    borderRadius: 15,
   },
   offerCardContent: {
     marginTop: 100,

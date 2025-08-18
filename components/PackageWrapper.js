@@ -22,17 +22,21 @@ const PackageWrapper = ({ visible, onClose, selectedPackage }) => {
   };
 
   const handleOfferSubscribe = (offerWithBank) => {
-    // Add the subscribed package to global constant
+    // Create complete package data with defaults for missing properties
     const packageData = {
+      id: Date.now(), // Generate unique ID
+      packageName: selectedPackage?.name || 'باقة تقسيط',
       duration: parseInt(offerWithBank.duration?.split(' ')[0]) || 24,
       monthlyAmount: parseInt(offerWithBank.monthlyPrice) || 375,
       remainingMonths: parseInt(offerWithBank.duration?.split(' ')[0]) || 24,
+      totalAmount: parseInt(offerWithBank.totalPrice?.replace(/,/g, '')) || 9000,
       remainingAmount: parseInt(offerWithBank.totalPrice?.replace(/,/g, '')) || 9000,
-      bankName: offerWithBank.selectedBank?.name || 'بنك الاتحاد', // Use selected bank name
+      bankName: offerWithBank.selectedBank?.name || 'بنك الاتحاد',
       offerLogos: offerWithBank.logos || [require('../assets/partnersLogo/alnuman.jpg')],
-      isSubscribed: true
+      isSubscribed: true,
+      subscriptionDate: new Date().toISOString(),
+      originalPrice: selectedPackage?.price || '9000 دينار'
     };
-    
     addSubscribedPackage(packageData);
     
     // Continue with the original flow - show booking modal

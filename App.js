@@ -1,10 +1,17 @@
+// Disable warnings in development
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning:']); // Ignore all warnings
+LogBox.ignoreAllLogs(); // Ignore all logs including warnings
+
 import React, { useState } from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { Colors } from './constants/Colors';
 import { useFonts } from 'expo-font';
+import CustomText from './components/CustomText';
 
 // Import screens
 import SplashScreen from './screens/SplashScreen';
@@ -36,6 +43,7 @@ import { UserProvider } from './contexts/UserContext';
 import { FollowProvider } from './contexts/FollowContext';
 import { NotificationsProvider } from './contexts/NotificationsContext';
 import { ConversationsProvider } from './contexts/ConversationsContext';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -49,13 +57,8 @@ const TabNavigator = () => {
       }}
       tabBar={props => <BottomTabNavigator {...props} />}
     >
-    
-     
-      
-      {/* <Tab.Screen name="Account" component={ProfileScreen} />
-      <Tab.Screen name="Settings" component={HomeScreen} /> */}
-       <Tab.Screen name="List" component={HomeScreen} />
-       <Tab.Screen name="installment" component={InstallmentScreen} />
+      <Tab.Screen name="List" component={HomeScreen} />
+      <Tab.Screen name="installment" component={InstallmentScreen} />
       <Tab.Screen name="Offers" component={OffersScreen} />
       <Tab.Screen name="Favorites" component={FavoritesScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
@@ -113,12 +116,23 @@ const AuthStack = () => {
 };
 
 export default function App() {
-    const [fontsLoaded] = useFonts({
-      'VIPRawyThin': require('./assets/fonts/vip-rawy-thin.ttf'),
-    });
-    if (!fontsLoaded) {
-      return null;
-    }
+  const [fontsLoaded] = useFonts({
+    'VIPRawyThin': require('./assets/fonts/vip-rawy-thin.ttf'),
+    'AdventPro-Regular': require('./assets/fonts/AdventPro-Regular.ttf'),
+  });
+
+  // Debug logging
+
+  // Show a loading screen while fonts are loading
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, backgroundColor: Colors.primaryDark, justifyContent: 'center', alignItems: 'center' }}>
+        <StatusBar style="light" backgroundColor={Colors.primaryDark} />
+        <CustomText style={{ color: Colors.white, fontSize: 18 }}>جاري التحميل...</CustomText>
+      </View>
+    );
+  }
+
   return (
     <UserProvider>
       <FollowProvider>

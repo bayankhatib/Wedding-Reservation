@@ -1,3 +1,5 @@
+import { convertArabicToEnglish } from '../utils/numberUtils';
+
 export const Categories = [
   { id: 1, title: 'مكان الحفل', image: 'part-location' },
   { id: 2, title: 'أزياء', image: 'clothes' },
@@ -10,7 +12,7 @@ export const MostRequested = [
     id: 1,
     title: 'بدلة عرس أنيقة',
     image: require('../assets/partners/di_class/photos/suit1.jpg'),
-    price: '500 دينار',
+    price: convertArabicToEnglish('500 دينار'),
     category: 'الملابس',
     rating: 4.7,
     supplier: '',
@@ -21,7 +23,7 @@ export const MostRequested = [
     title: 'فستان زفاف كلاسيكي',
     image: require('../assets/partners/beanka_rosa/photos/dress1.jpg'),
     rating: 4.9,
-    price: '950 دينار',
+    price: convertArabicToEnglish('950 دينار'),
     category: 'الملابس',
     supplier: '',
     partnerId: 8,
@@ -31,6 +33,7 @@ export const MostRequested = [
     title: 'سيارة زفاف',
     image: require('../assets/partners/elite_world/photos/car1.png'),
     rating: 4.9,
+    price: convertArabicToEnglish('100 دينار'),
     category: 'التصوير',
     supplier: '',
     partnerId: 14, 
@@ -39,7 +42,7 @@ export const MostRequested = [
     id: 4,
     title: 'تجميل عروس',
     image: require('../assets/partners/sona_jermi/photos/makeup1.jpg'),
-    price: '500 دينار',
+    price: convertArabicToEnglish('500 دينار'),
     rating: 4.8,
     category: 'التجميل',
     supplier: '',
@@ -51,21 +54,21 @@ export const SpecialPackages = [
   {
     id: 1,
     name: 'الباقة البرونزية',
-    price: '1800 دينار',
+    price: convertArabicToEnglish('1800 دينار'),
     description: 'باقة اقتصادية للخدمات الأساسية',
     icon: '/assets/icons/bronze-package.svg'
-  },,
+  },
   {
     id: 2,
     name: 'الباقة الفضية',
-    price: '3000 دينار',
+    price: convertArabicToEnglish('3000 دينار'),
     description: 'باقة متوسطة للخدمات الأساسية',
     icon: '/assets/icons/silver-package.svg',
   },
   {
     id: 3,
     name: 'الباقة الذهبية',
-    price: '9000 دينار',
+    price: convertArabicToEnglish('9000 دينار'),
     description: 'باقة شاملة لجميع الخدمات',
     icon: '/assets/icons/gold-package.svg'
   },
@@ -76,15 +79,15 @@ export const Notifications = [
     id: 1,
     title: 'تم إرسال رسالة',
     message: 'لديك رسالة جديدة من العميل أحمد محمد',
-    time: 'منذ 5 دقائق',
+    time: convertArabicToEnglish('منذ 5 دقائق'),
     icon: 'A',
     read: false
   },
   {
     id: 2,
     title: 'تم التفاعل مع منشوراتك',
-    message: 'أعجب 15 شخص بمنشورك الجديد',
-    time: 'منذ ساعة',
+    message: convertArabicToEnglish('أعجب 15 شخص بمنشورك الجديد'),
+    time: convertArabicToEnglish('منذ ساعة'),
     icon: 'B',
     read: true
   },
@@ -92,15 +95,15 @@ export const Notifications = [
     id: 3,
     title: 'حجز جديد',
     message: 'تم تأكيد حجز جديد لخدمات التجميل',
-    time: 'منذ 3 ساعات',
+    time: convertArabicToEnglish('منذ 3 ساعات'),
     icon: 'C',
     read: false
   },
   {
     id: 4,
     title: 'تقييم جديد',
-    message: 'حصلت على تقييم 5 نجوم من العميل سارة',
-    time: 'منذ يوم',
+    message: convertArabicToEnglish('حصلت على تقييم 5 نجوم من العميل سارة'),
+    time: convertArabicToEnglish('منذ يوم'),
     icon: 'D',
     read: true
   }

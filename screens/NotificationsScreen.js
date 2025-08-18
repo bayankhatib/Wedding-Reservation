@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { Notifications } from '../constants/FakeData';
+import { convertArabicToEnglish } from '../utils/numberUtils';
 
 const NotificationsScreen = ({ navigation }) => {
   const renderNotification = (notification) => (
@@ -24,9 +25,9 @@ const NotificationsScreen = ({ navigation }) => {
       </View>
       
       <View style={styles.notificationContent}>
-        <Text style={styles.notificationTitle}>{notification.title}</Text>
-        <Text style={styles.notificationMessage}>{notification.message}</Text>
-        <Text style={styles.notificationTime}>{notification.time}</Text>
+        <Text style={styles.notificationTitle}>{convertArabicToEnglish(notification.title)}</Text>
+        <Text style={styles.notificationMessage}>{convertArabicToEnglish(notification.message)}</Text>
+        <Text style={styles.notificationTime}>{convertArabicToEnglish(notification.time)}</Text>
       </View>
       
       {!notification.read && <View style={styles.unreadDot} />}
@@ -67,11 +68,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.textPrimary,
     textAlign: 'right',
+    fontFamily: 'AdventPro',
   },
   markAllRead: {
     fontSize: 14,
     color: Colors.primary,
     fontWeight: '600',
+    fontFamily: 'AdventPro',
   },
   content: {
     flex: 1,
@@ -110,6 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.white,
     fontWeight: 'bold',
+    fontFamily: 'AdventPro',
   },
   notificationContent: {
     flex: 1,
@@ -120,6 +124,7 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     textAlign: 'right',
     marginBottom: 5,
+    fontFamily: 'AdventPro',
   },
   notificationMessage: {
     fontSize: 14,
@@ -127,11 +132,13 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     lineHeight: 20,
     marginBottom: 5,
+    fontFamily: 'AdventPro',
   },
   notificationTime: {
     fontSize: 12,
     color: Colors.textSecondary,
     textAlign: 'right',
+    fontFamily: 'AdventPro',
   },
   unreadDot: {
     width: 8,

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from './CustomText';
 import CustomButton from './CustomButton';
 import { Colors }from '../constants/Colors';
@@ -128,7 +128,7 @@ const PartyLocationModal = ({
             {/* Header */}
             <View style={styles.bookingModalHeader}>
             <TouchableOpacity style={styles.closeBookingButton} onPress={handleClose}>
-                <Ionicons name="close" size={24} color={Colors.primaryDark} />
+                <Icon name="close" size={24} color={Colors.primaryDark} />
               </TouchableOpacity>
               <CustomText style={styles.bookingModalTitle}>اختيار نوع القاعة</CustomText>
             </View>
@@ -163,15 +163,15 @@ const PartyLocationModal = ({
                   {shouldShowOldPrice ? (
                     <>
                       <CustomText style={styles.oldPrice}>
-                        {isNaN(oldPrice) ? Math.round(basePriceNumber * 1.2) : oldPrice} دينار
+                        <CustomText style={{ fontFamily: 'AdventPro' }}>{isNaN(oldPrice) ? Math.round(basePriceNumber * 1.2) : oldPrice}</CustomText> دينار
                       </CustomText>
                       <CustomText style={styles.currentPrice}>
-                        {isNaN(currentPrice) ? basePriceNumber : currentPrice} دينار
+                        <CustomText style={{ fontFamily: 'AdventPro' }}>{isNaN(currentPrice) ? basePriceNumber : currentPrice}</CustomText> دينار
                       </CustomText>
                     </>
                   ) : (
                     <CustomText style={styles.currentPrice}>
-                      {isNaN(currentPrice) ? basePriceNumber : currentPrice} دينار
+                      <CustomText style={{ fontFamily: 'AdventPro' }}>{isNaN(currentPrice) ? basePriceNumber : currentPrice}</CustomText> دينار
                     </CustomText>
                   )}
                 </View>
@@ -199,7 +199,7 @@ const PartyLocationModal = ({
                 <Image source={partnerLogo} style={styles.partnerLogoImage} />
               </View>
               <TouchableOpacity onPress={handleClose}>
-                <Ionicons name="chevron-back" size={16} color={Colors.primaryDark} />
+                <Icon name="chevron-back" size={16} color={Colors.primaryDark} />
               </TouchableOpacity>
             </View>
           </TouchableOpacity>

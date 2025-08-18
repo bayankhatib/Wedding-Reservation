@@ -6,9 +6,10 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from './CustomText';
 import { Colors } from '../constants/Colors';
+import { convertArabicToEnglish } from '../utils/numberUtils';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -19,7 +20,7 @@ const NotificationsModal = ({ visible, onClose, bellPosition }) => {
       iconColor: '#FF6B35',
       title: 'تم تحديث حزمة الباقة الذهبية',
       subtitle: 'تم إضافة خدمات جديدة',
-      count: 2,
+      count: convertArabicToEnglish('2'),
       action: 'عرض التفاصيل'
     },
     {
@@ -27,7 +28,7 @@ const NotificationsModal = ({ visible, onClose, bellPosition }) => {
       iconColor: Colors.primaryDark,
       title: 'تم تأكيد حجز مكان الحفل',
       subtitle: 'تم تأكيد الحجز بنجاح',
-      count: 1,
+      count: convertArabicToEnglish('1'),
       action: 'انتقل إلى الصفحة'
     }
   ];
@@ -65,7 +66,7 @@ const NotificationsModal = ({ visible, onClose, bellPosition }) => {
           {/* Header */}
           <View style={styles.modalHeader}>
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Ionicons name="close" size={24} color={Colors.primaryDark} />
+              <Icon name="close" size={24} color={Colors.primaryDark} />
             </TouchableOpacity>
             <CustomText style={styles.modalTitle}>الإشعارات</CustomText>
           </View>
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.primaryDark,
     textAlign: 'right',
+    fontFamily: 'AdventPro',
   },
   closeButton: {
     padding: 5,
@@ -148,6 +150,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'AdventPro',
   },
   notificationContent: {
     flex: 1,
@@ -159,6 +162,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginBottom: 5,
     lineHeight: 22,
+    fontFamily: 'AdventPro',
   },
   notificationSubtitle: {
     fontSize: 14,
@@ -166,6 +170,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginBottom: 10,
     lineHeight: 20,
+    fontFamily: 'AdventPro',
   },
   actionRow: {
     flexDirection: 'row',
@@ -177,6 +182,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryDark,
     textAlign: 'right',
     fontWeight: '500',
+    fontFamily: 'AdventPro',
   },
   countBadge: {
     backgroundColor: Colors.error,
@@ -191,6 +197,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 12,
     fontWeight: 'bold',
+    fontFamily: 'AdventPro',
   },
   modalFooter: {
     borderTopWidth: 1,
@@ -209,6 +216,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginRight: 8,
     fontWeight: '500',
+    fontFamily: 'AdventPro',
   },
 });
 

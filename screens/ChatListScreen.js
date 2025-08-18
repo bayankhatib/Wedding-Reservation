@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
+  FlatList,
   TouchableOpacity,
   Image,
-  Dimensions,
+  Dimensions
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import CustomText from '../components/CustomText';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
 import BottomTabNavigator from '../components/BottomTabNavigator';
+import CustomText from '../components/CustomText';
 import { useConversations } from '../contexts/ConversationsContext';
 import { PartnerDetails } from '../constants/PartnerData';
 
@@ -32,7 +32,7 @@ const ChatListScreen = ({ navigation }) => {
   const renderEmptyChatView = () => (
     <View style={styles.emptyContainer}>
       <View style={styles.emptyIconContainer}>
-        <Ionicons name="chatbubbles-outline" size={80} color={Colors.primaryDark} />
+        <Icon name="chatbubbles-outline" size={80} color={Colors.primaryDark} />
       </View>
       <CustomText style={styles.emptyTitle}>لا توجد محادثات</CustomText>
       <CustomText style={styles.emptySubtitle}>
@@ -80,7 +80,7 @@ const ChatListScreen = ({ navigation }) => {
           </View>
           <View style={styles.chatMeta}>
             {lastMessageTime && (
-              <CustomText style={styles.timeStamp}>
+              <CustomText style={[styles.timeStamp, { fontFamily: 'AdventPro' }]}>
                 {lastMessageTime}
               </CustomText>
             )}
@@ -106,13 +106,13 @@ const ChatListScreen = ({ navigation }) => {
       {/* Chat List */}
       <View style={styles.chatListContainer}>
         {sortedConversations.length > 0 ? (
-          <ScrollView 
-            style={styles.chatList}
+          <FlatList 
+            data={sortedConversations}
+            renderItem={({ item }) => renderChatItem(item)}
+            keyExtractor={(item) => item.partnerId}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.chatListContent}
-          >
-            {sortedConversations.map(renderChatItem)}
-          </ScrollView>
+          />
         ) : (
           <View style={styles.emptyViewContainer}>
             {renderEmptyChatView()}

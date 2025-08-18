@@ -15,7 +15,7 @@ import { PartyLocations } from '../constants/PartyLocationsData';
 import { MakeupData } from '../constants/MakeupData';
 import { ClothesData } from '../constants/ClothesData';
 import { CarsData } from '../constants/CarsData';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import BronzePackageIcon from '../assets/icons/bronze-package.svg';
 import SilverPackageIcon from '../assets/icons/silver-package.svg';
 import GoldPackageIcon from '../assets/icons/gold-package.svg';
@@ -25,6 +25,7 @@ import PackageWrapper from '../components/PackageWrapper';
 import ImageSlider from '../components/ImageSlider';
 import NotificationsModal from '../components/NotificationsModal';
 import { useNotifications } from '../contexts/NotificationsContext';
+import { convertArabicToEnglish } from '../utils/numberUtils';
 
 const HomeScreen = ({ navigation }) => {
   const [selectedPackage, setSelectedPackage] = useState(null);
@@ -40,9 +41,9 @@ const HomeScreen = ({ navigation }) => {
     {
       id: 1,
       name: 'الباقة البرونزية',
-      duration: '12 شهر',
-      totalPrice: '4,500',
-      monthlyPrice: '375',
+      duration: convertArabicToEnglish('12 شهر'),
+      totalPrice: convertArabicToEnglish('4,500'),
+      monthlyPrice: convertArabicToEnglish('375'),
       logos: [
         require('../assets/partnersLogo/bebek.jpg'),
         require('../assets/partnersLogo/bob.jpg'),
@@ -53,9 +54,9 @@ const HomeScreen = ({ navigation }) => {
     {
       id: 2,
       name: 'الباقة الفضية',
-      duration: '18 شهر',
-      totalPrice: '6,750',
-      monthlyPrice: '375',
+      duration: convertArabicToEnglish('18 شهر'),
+      totalPrice: convertArabicToEnglish('6,750'),
+      monthlyPrice: convertArabicToEnglish('375'),
       logos: [
         require('../assets/partnersLogo/alnuman.jpg'),
         require('../assets/partnersLogo/jasmine_fashion.jpg'),
@@ -66,9 +67,9 @@ const HomeScreen = ({ navigation }) => {
     {
       id: 3,
       name: 'الباقة الذهبية',
-      duration: '24 شهر',
-      totalPrice: '9,000',
-      monthlyPrice: '375',
+      duration: convertArabicToEnglish('24 شهر'),
+      totalPrice: convertArabicToEnglish('9,000'),
+      monthlyPrice: convertArabicToEnglish('375'),
       logos: [
         require('../assets/partnersLogo/white_hall.jpg'),
         require('../assets/partnersLogo/space_for_man.jpg'),
@@ -161,13 +162,13 @@ const HomeScreen = ({ navigation }) => {
         <Image source={item.image} style={styles.itemImage} resizeMode="cover" />
         <View style={styles.itemOverlay}>
           <View style={styles.ratingContainer}>
-            <CustomText style={styles.ratingText}>★ {item.rating}</CustomText>
+            <CustomText style={styles.ratingText}>★ {convertArabicToEnglish(item.rating.toString())}</CustomText>
           </View>
         </View>
       </View>
       <View style={styles.itemInfo}>
         <CustomText style={styles.itemTitle}>{item.title}</CustomText>
-        <CustomText style={styles.itemPrice}>{item.price}</CustomText>
+        <CustomText style={styles.itemPrice}>{convertArabicToEnglish(item.price)}</CustomText>
       </View>
     </TouchableOpacity>
   );
@@ -225,10 +226,10 @@ const HomeScreen = ({ navigation }) => {
               markNotificationsAsRead();
             }}
           >
-            <Ionicons name="notifications-outline" size={24} color={Colors.primaryDark} />
+            <Icon name="notifications-outline" size={24} color={Colors.primaryDark} />
             {!notificationsRead && (
               <View style={styles.notificationBadge}>
-                <CustomText style={styles.badgeText}>2</CustomText>
+                <CustomText style={styles.badgeText}>{convertArabicToEnglish('2')}</CustomText>
               </View>
             )}
           </TouchableOpacity>
@@ -327,6 +328,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 12,
     fontWeight: 'bold',
+    fontFamily: 'AdventPro',
   },
   content: {
     flex: 1,
@@ -441,11 +443,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.primary,
     fontWeight: '600',
+    fontFamily: 'AdventPro',
   },
   itemPrice: {
     fontSize: 14,
     color: Colors.primaryDark,
     textAlign: 'right',
+    fontFamily: 'AdventPro',
   },
   packagesContainer: {
     flexDirection: 'row',
@@ -489,6 +493,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.primaryDark,
     textAlign: 'center',
+    fontFamily: 'AdventPro',
   },
   // Modal Styles
   modalOverlay: {

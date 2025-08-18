@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../constants/Colors';
 import CustomButton from '../components/CustomButton';
+import CustomText from '../components/CustomText';
 
 const RegistrationSuccessScreen = ({ navigation }) => {
   const handleContinue = () => {
@@ -30,15 +31,15 @@ const RegistrationSuccessScreen = ({ navigation }) => {
             شكراً لك على التسجيل في منصة بتفرحك. تم استلام طلبك بنجاح وسيتم مراجعته من قبل فريقنا المختص.
           </Text>
 
-          <Text style={styles.details}>
-            سيتم إرسال تفاصيل التفعيل إلى بريدك الإلكتروني ورقم هاتفك المسجل خلال 24-48 ساعة عمل.
-          </Text>
+          <CustomText style={styles.details}>
+            سيتم إرسال تفاصيل التفعيل إلى بريدك الإلكتروني ورقم هاتفك المسجل خلال <CustomText style={{ fontFamily: 'AdventPro' }}>24-48</CustomText> ساعة عمل.
+          </CustomText>
 
-          <Text style={styles.contact}>
+          <CustomText style={styles.contact}>
             للاستفسارات، يمكنك التواصل معنا عبر:
             {'\n'}البريد الإلكتروني: support@bitfarhak.com
-            {'\n'}الهاتف: 966-11-123-4567
-          </Text>
+            {'\n'}الهاتف: <CustomText style={{ fontFamily: 'AdventPro' }}>966-11-123-4567</CustomText>
+          </CustomText>
 
           <CustomButton
             title="العودة للصفحة الرئيسية"

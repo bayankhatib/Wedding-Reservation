@@ -1,18 +1,20 @@
-import React from 'react';
-import { 
-  View, 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView, 
-  TouchableOpacity, 
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
+  Alert
 } from 'react-native';
-import { Video } from 'expo-av';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
 import CustomText from '../components/CustomText';
-import { Ionicons } from '@expo/vector-icons';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { PartnerDetails } from '../constants/PartnerData';
+import { Video } from 'expo-av';
 
 const FavoritesScreen = ({ navigation }) => {
   const { favorites, toggleFavorite } = useFavorites();
@@ -25,15 +27,15 @@ const FavoritesScreen = ({ navigation }) => {
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
         stars.push(
-          <Ionicons key={i} name="star" size={16} color="#FFD700" />
+          <Icon key={i} name="star" size={16} color="#FFD700" />
         );
       } else if (i === fullStars && hasHalfStar) {
         stars.push(
-          <Ionicons key={i} name="star-half" size={16} color="#FFD700" />
+          <Icon key={i} name="star-half" size={16} color="#FFD700" />
         );
       } else {
         stars.push(
-          <Ionicons key={i} name="star-outline" size={16} color="#FFD700" />
+          <Icon key={i} name="star-outline" size={16} color="#FFD700" />
         );
       }
     }
@@ -52,23 +54,23 @@ const FavoritesScreen = ({ navigation }) => {
   };
 
   const renderFavoriteCard = (item) => (
-    <TouchableOpacity 
-      key={`${item.partnerId}_${item.id}`} 
+    <TouchableOpacity
+      key={`${item.partnerId}_${item.id}`}
       style={styles.favoriteCard}
       onPress={() => navigation.navigate('PartnerInfo', { partnerId: item.partnerId })}
     >
       {/* Heart Icon */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.heartIcon}
         onPress={(e) => {
           e.stopPropagation();
           toggleFavorite(item);
         }}
       >
-        <Ionicons 
-          name="heart" 
-          size={20} 
-          color="#FF0000" 
+        <Icon
+          name="heart"
+          size={20}
+          color="#FF0000"
         />
       </TouchableOpacity>
 
@@ -89,7 +91,7 @@ const FavoritesScreen = ({ navigation }) => {
                 useNativeControls={false}
               />
               <View style={styles.playButton}>
-                <Ionicons name="play" size={16} color={Colors.white} />
+                <Icon name="play" size={16} color={Colors.white} />
               </View>
             </View>
           )}
@@ -98,30 +100,30 @@ const FavoritesScreen = ({ navigation }) => {
         {/* Left Side - Details */}
         <View style={styles.detailsContainer}>
           <CustomText style={styles.partnerName}>{item.partnerName}</CustomText>
-          
+
           {/* Rating */}
           <View style={styles.ratingContainer}>
-            <CustomText style={styles.ratingText}>
+            <CustomText style={[styles.ratingText, { fontFamily: 'AdventPro' }]}>
               ({item.reviewCount}){item.rating}
             </CustomText>
             <View style={styles.starsContainer}>
               {renderStars(item.rating)}
             </View>
           </View>
-          
+
           {/* Popularity */}
           <View style={styles.popularityContainer}>
             <CustomText style={styles.popularityText}>
-              الأكثر طلبا من {item.popularity} مستخدمًا
+              الأكثر طلبا من <CustomText style={{ fontFamily: 'AdventPro' }}>{item.popularity}</CustomText> مستخدمًا
             </CustomText>
-            <Ionicons name="heart" size={14} color="#FF0000" />
+            <Icon name="heart" size={14} color="#FF0000" />
           </View>
-          
+
           {/* Discount Button - Only show if there's a discount */}
           {item.discount && item.discount !== '0%' && (
             <View style={styles.discountButton}>
               <CustomText style={styles.discountButtonText}>
-                خصم {item.discount} على العرض
+                خصم <CustomText style={{ fontFamily: 'AdventPro' }}>{item.discount}</CustomText> على العرض
               </CustomText>
             </View>
           )}
@@ -145,7 +147,7 @@ const FavoritesScreen = ({ navigation }) => {
           </View>
         ) : (
           <View style={styles.emptyState}>
-            <Ionicons name="heart-outline" size={64} color="#CCCCCC" />
+            <Icon name="heart-outline" size={64} color="#CCCCCC" />
             <CustomText style={styles.emptyStateTitle}>لا توجد مفضلات</CustomText>
             <CustomText style={styles.emptyStateDescription}>
               ابدأ بإضافة الشركاء المفضلين لديك

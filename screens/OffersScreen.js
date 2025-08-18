@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView, 
-  TouchableOpacity, 
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
+  Modal,
+  Alert
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
 import CustomText from '../components/CustomText';
+import { useFavorites } from '../contexts/FavoritesContext';
+import { PartnerDetails } from '../constants/PartnerData';
 import { Categories } from '../constants/FakeData';
-import { Ionicons } from '@expo/vector-icons';
 
 const OffersScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState('أزياء');
@@ -121,18 +125,18 @@ const OffersScreen = ({ navigation }) => {
 
   const renderCategoryFilter = () => (
     <View style={styles.categoryFilterContainer}>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.categoryFilter}
         onPress={() => setShowCategoryFilter(!showCategoryFilter)}
       >
         <CustomText style={styles.categoryFilterText}>{selectedCategory}</CustomText>
-        <Ionicons 
-          name={showCategoryFilter ? 'chevron-up' : 'chevron-down'} 
-          size={16} 
-          color={Colors.primaryDark} 
+        <Icon
+          name={showCategoryFilter ? 'chevron-up' : 'chevron-down'}
+          size={16}
+          color={Colors.primaryDark}
         />
       </TouchableOpacity>
-      
+
       {showCategoryFilter && (
         <View style={styles.categoryDropdown}>
           {Categories.map((category) => (
@@ -153,42 +157,42 @@ const OffersScreen = ({ navigation }) => {
   );
 
   const renderOfferCard = (offer) => (
-    <TouchableOpacity 
-      key={offer.id} 
+    <TouchableOpacity
+      key={offer.id}
       style={styles.offerCard}
       onPress={() => navigation.navigate('PartnerInfo', { partnerId: offer.partnerId })}
     >
       <View style={styles.offerCardContent}>
         <View style={styles.offerInfo}>
           <CustomText style={styles.partnerName}>{offer.partnerName}</CustomText>
-          
+
           <View style={styles.offerDetails}>
             <CustomText style={styles.offerText}>
-              خصم {offer.discount} {offer.duration}
+              خصم <CustomText style={{ fontFamily: 'AdventPro' }}>{offer.discount}</CustomText> {offer.duration}
             </CustomText>
           </View>
           <View style={styles.offersTag}>
                 <CustomText style={styles.offersTagText}>عروض</CustomText>
             </View>
           <View style={styles.ratingContainer}>
-          <CustomText style={styles.ratingText}>
+          <CustomText style={[styles.ratingText, { fontFamily: 'AdventPro' }]}>
               {offer.rating} ({offer.reviews})
             </CustomText>
             <View style={styles.starsContainer}>
               {[1, 2, 3, 4, 5].map((star) => (
-                <Ionicons 
-                  key={star} 
-                  name="star" 
-                  size={12} 
-                  color={star <= Math.floor(offer.rating) ? '#FFD700' : '#E0E0E0'} 
+                <Icon
+                  key={star}
+                  name="star"
+                  size={12}
+                  color={star <= Math.floor(offer.rating) ? '#FFD700' : '#E0E0E0'}
                 />
               ))}
             </View>
           </View>
         </View>
-        
+
         <View style={styles.brandLogoContainer}>
-          <Image 
+          <Image
             source={offer.brandLogo}
             style={styles.brandLogoImage}
             resizeMode="cover"
@@ -208,7 +212,7 @@ const OffersScreen = ({ navigation }) => {
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {renderCategoryFilter()}
-        
+
         <View style={styles.offersContainer}>
           {currentOffers.map(renderOfferCard)}
         </View>
@@ -307,16 +311,16 @@ const styles = StyleSheet.create({
   offerCard: {
     backgroundColor: Colors.white,
     borderRadius: 15,
-    borderWidth: 1,
+    borderWidth: 2, // Increased border width
     borderColor: Colors.primaryDark,
-    backgroundColor: '#f4eac1',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 }, // Increased shadow
+    shadowOpacity: 0.2, // Increased shadow opacity
+    shadowRadius: 8, // Increased shadow radius
+    elevation: 5, // Increased elevation
     position: 'relative',
     overflow: 'hidden',
+    marginBottom: 15, // Add margin between cards
   },
   offerCardContent: {
     flexDirection: 'row',

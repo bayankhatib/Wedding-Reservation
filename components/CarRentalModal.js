@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from './CustomText';
 import { Colors } from '../constants/Colors';
 import BookingProcessModal from './BookingProcessModal';
@@ -139,7 +139,7 @@ const CarRentalModal = ({ visible, onClose, partnerGallery, partnerBasePrice, pa
                 style={styles.closeBookingButton}
                 onPress={handleClose}
               >
-                <Ionicons name="close" size={24} color={Colors.primaryDark} />
+                <Icon name="close" size={24} color={Colors.primaryDark} />
               </TouchableOpacity>
               <CustomText style={styles.bookingModalTitle}>تأجير السيارات</CustomText>
             </View>
@@ -184,11 +184,11 @@ const CarRentalModal = ({ visible, onClose, partnerGallery, partnerBasePrice, pa
                 <View style={styles.priceRow}>
                   {shouldShowOldPrice ? (
                     <>
-                      <CustomText style={styles.oldPrice}>{selectedImage.oldPrice}</CustomText>
-                      <CustomText style={styles.currentPrice}>{selectedImage.currentPrice}</CustomText>
+                      <CustomText style={[styles.oldPrice, { fontFamily: 'AdventPro' }]}>{selectedImage.oldPrice}</CustomText>
+                      <CustomText style={[styles.currentPrice, { fontFamily: 'AdventPro' }]}>{selectedImage.currentPrice}</CustomText>
                     </>
                   ) : (
-                    <CustomText style={styles.currentPrice}>{selectedImage.currentPrice}</CustomText>
+                    <CustomText style={[styles.currentPrice, { fontFamily: 'AdventPro' }]}>{selectedImage.currentPrice}</CustomText>
                   )}
                 </View>
               </View>
@@ -213,7 +213,7 @@ const CarRentalModal = ({ visible, onClose, partnerGallery, partnerBasePrice, pa
                 <Image source={partnerLogo} style={styles.sellerLogo} />
               </View>
               <TouchableOpacity onPress={handleClose}>
-                <Ionicons name="chevron-back" size={16} color={Colors.primaryDark} />
+                <Icon name="chevron-back" size={16} color={Colors.primaryDark} />
               </TouchableOpacity>
             </View>
           </TouchableOpacity>

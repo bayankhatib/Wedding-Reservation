@@ -8,7 +8,7 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from './CustomText';
 import { Colors } from '../constants/Colors';
 import { Camera, CameraType, FlashMode } from 'expo-camera';
@@ -148,12 +148,12 @@ const DrivingLicenseModal = ({
           >
             <View style={styles.modalHeader}>
             <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-                <Ionicons name="close" size={24} color={Colors.primaryDark} />
+                <Icon name="close" size={24} color={Colors.primaryDark} />
               </TouchableOpacity>
               <CustomText style={styles.modalTitle}>إذن الكاميرا مطلوب</CustomText>
             </View>
             <View style={styles.permissionContainer}>
-              <Ionicons name="camera-off" size={80} color={Colors.primaryDark} />
+              <Icon name="camera-off" size={80} color={Colors.primaryDark} />
               <CustomText style={styles.permissionText}>
                 يرجى السماح بالوصول إلى الكاميرا في إعدادات التطبيق
               </CustomText>
@@ -186,7 +186,7 @@ const DrivingLicenseModal = ({
             {/* Header */}
             <View style={styles.modalHeader}>
             <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-                <Ionicons name="close" size={24} color={Colors.primaryDark} />
+                <Icon name="close" size={24} color={Colors.primaryDark} />
               </TouchableOpacity>
               <CustomText style={styles.modalTitle}>فحص رخصة القيادة</CustomText>
 
@@ -210,13 +210,13 @@ const DrivingLicenseModal = ({
                       resizeMode="cover"
                     />
                     <View style={styles.licenseOverlay}>
-                      <Ionicons name="checkmark-circle" size={40} color={Colors.primary} />
+                      <Icon name="checkmark-circle" size={40} color={Colors.primary} />
                       <CustomText style={styles.licenseValidText}>تم التحقق من الرخصة</CustomText>
                     </View>
                   </View>
                 ) : (
                   <View style={styles.placeholderContainer}>
-                    <Ionicons name="camera" size={60} color={Colors.primaryDark} />
+                    <Icon name="camera" size={60} color={Colors.primaryDark} />
                     <CustomText style={styles.placeholderText}>أمسح / أضف الصورة</CustomText>
                   </View>
                 )}
@@ -228,11 +228,11 @@ const DrivingLicenseModal = ({
               {!licenseImage ? (
                 <View style={styles.buttonRow}>
                   <TouchableOpacity style={styles.scanButton} onPress={handleScanLicense}>
-                    <Ionicons name="camera" size={20} color={Colors.primaryDark} />
+                    <Icon name="camera" size={20} color={Colors.primaryDark} />
                     <CustomText style={styles.scanButtonText}>مسح الرخصة</CustomText>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.uploadButton} onPress={handlePickImage}>
-                    <Ionicons name="images" size={20} color={Colors.primaryDark} />
+                    <Icon name="images" size={20} color={Colors.primaryDark} />
                     <CustomText style={styles.uploadButtonText}>رفع صورة</CustomText>
                   </TouchableOpacity>
                 </View>
@@ -267,14 +267,14 @@ const DrivingLicenseModal = ({
                   style={styles.cameraControlButton}
                   onPress={() => setShowCamera(false)}
                 >
-                  <Ionicons name="close" size={30} color={Colors.white} />
+                  <Icon name="close" size={30} color={Colors.white} />
                 </TouchableOpacity>
                 
                 <TouchableOpacity 
                   style={styles.cameraControlButton}
                   onPress={toggleFlash}
                 >
-                  <Ionicons 
+                  <Icon 
                     name={flashMode === FlashMode.torch ? "flash" : "flash-off"} 
                     size={30} 
                     color={Colors.white} 
@@ -285,7 +285,7 @@ const DrivingLicenseModal = ({
                   style={styles.cameraControlButton}
                   onPress={toggleCamera}
                 >
-                  <Ionicons name="camera-reverse" size={30} color={Colors.white} />
+                  <Icon name="camera-reverse" size={30} color={Colors.white} />
                 </TouchableOpacity>
               </View>
 

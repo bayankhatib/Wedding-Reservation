@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  StyleSheet, 
-  SafeAreaView, 
-  TouchableOpacity,
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
   ScrollView,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
 import CustomText from '../components/CustomText';
-import { Ionicons } from '@expo/vector-icons';
-import BottomTabNavigator from '../components/BottomTabNavigator';
 import Logo from '../assets/logo.svg';
+import BottomTabNavigator from '../components/BottomTabNavigator';
 
 const ServiceTermsScreen = ({ navigation }) => {
   const [showMore, setShowMore] = useState(false);
@@ -66,13 +67,27 @@ const ServiceTermsScreen = ({ navigation }) => {
 
   const displayedTerms = showMore ? serviceTerms : serviceTerms.slice(0, 4);
 
+  const renderDescription = (description) => {
+    if (description.includes('24')) {
+      const parts = description.split('24');
+      return (
+        <>
+          {parts[0]}
+          <CustomText style={{ fontFamily: 'AdventPro' }}>24</CustomText>
+          {parts[1]}
+        </>
+      );
+    }
+    return description;
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         {/* Header with Logo */}
         <View style={styles.headerSection}>
           <View style={styles.logoContainer}>
-            <Logo 
+            <Logo
               style={styles.logoImage}
               width={150}
               height={100}
@@ -84,31 +99,31 @@ const ServiceTermsScreen = ({ navigation }) => {
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.termsSection}>
             <CustomText style={styles.termsTitle}>شروط الخدمة</CustomText>
-            
+
             {/* Service Terms */}
             <View style={styles.termsContainer}>
               {displayedTerms.map((term, index) => (
                 <View key={index} style={styles.termItem}>
                   <CustomText style={styles.termTitle}>{term.title}</CustomText>
                   <CustomText style={styles.termDescription}>
-                    {term.description}
+                    {renderDescription(term.description)}
                   </CustomText>
                 </View>
               ))}
             </View>
 
             {/* Show More/Less Link */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.showMoreContainer}
               onPress={() => setShowMore(!showMore)}
             >
               <CustomText style={styles.showMoreText}>
                 {showMore ? 'عرض أقل' : 'عرض أكثر'}
               </CustomText>
-              <Ionicons 
-                name={showMore ? "chevron-down" : "chevron-up"} 
-                size={16} 
-                color={Colors.primaryDark} 
+              <Icon
+                name={showMore ? "chevron-down" : "chevron-up"}
+                size={16}
+                color={Colors.primaryDark}
               />
             </TouchableOpacity>
           </View>
@@ -116,9 +131,9 @@ const ServiceTermsScreen = ({ navigation }) => {
       </SafeAreaView>
 
       {/* Bottom Tabs */}
-      <BottomTabNavigator 
-        state={{ index: 4 }} 
-        navigation={navigation} 
+      <BottomTabNavigator
+        state={{ index: 4 }}
+        navigation={navigation}
       />
     </View>
   );

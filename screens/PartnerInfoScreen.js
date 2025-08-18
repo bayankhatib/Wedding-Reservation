@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView, 
-  TouchableOpacity, 
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
   Image,
   Dimensions,
-  Modal
+  Modal,
+  Alert,
+  Linking
 } from 'react-native';
-import { Video } from 'expo-av';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
-import { PartnerDetails } from '../constants/PartnerData';
-import { Ionicons } from '@expo/vector-icons';
 import CustomText from '../components/CustomText';
+import { useFavorites } from '../contexts/FavoritesContext';
+import { useFollow } from '../contexts/FollowContext';
+import { PartnerDetails } from '../constants/PartnerData';
+import { Video } from 'expo-av';
 import BottomTabNavigator from '../components/BottomTabNavigator';
 import ClothingBookingModal from '../components/ClothingBookingModal';
 import CarRentalModal from '../components/CarRentalModal';
 import PartyLocationModal from '../components/PartyLocationModal';
 import MakeupBookingModal from '../components/MakeupBookingModal';
-import { useFavorites } from '../contexts/FavoritesContext';
-import { useFollow } from '../contexts/FollowContext';
 
 const PartnerInfoScreen = ({ navigation, route }) => {
   const { partnerId } = route.params;
@@ -30,20 +32,20 @@ const PartnerInfoScreen = ({ navigation, route }) => {
   const [carRentalModalVisible, setCarRentalModalVisible] = useState(false);
   const [partyLocationModalVisible, setPartyLocationModalVisible] = useState(false);
   const [makeupBookingModalVisible, setMakeupBookingModalVisible] = useState(false);
-  
+
   const partner = PartnerDetails[partnerId];
   const { toggleFavorite, isFavorite } = useFavorites();
   const { isPartnerFollowed, toggleFollow } = useFollow();
 
   // Check if partner is in clothes category
   const isClothesPartner = [8, 9, 10, 11, 12].includes(partnerId);
-  
+
   // Check if partner is in cars category
   const isCarPartner = [13, 14].includes(partnerId);
-  
+
   // Check if partner is in party location category
   const isPartyLocationPartner = [1, 2, 3, 4, 5, 6, 7].includes(partnerId);
-  
+
   // Check if partner is in makeup category
   const isMakeupPartner = [15, 16, 17].includes(partnerId);
 
@@ -63,15 +65,15 @@ const PartnerInfoScreen = ({ navigation, route }) => {
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
         stars.push(
-          <Ionicons key={i} name="star" size={12} color={Colors.primary} />
+          <Icon key={i} name="star" size={12} color={Colors.primary} />
         );
       } else if (i === fullStars && hasHalfStar) {
         stars.push(
-          <Ionicons key={i} name="star-half" size={12} color={Colors.primary} />
+          <Icon key={i} name="star-half" size={12} color={Colors.primary} />
         );
       } else {
         stars.push(
-          <Ionicons key={i} name="star-outline" size={12} color={Colors.primary} />
+          <Icon key={i} name="star-outline" size={12} color={Colors.primary} />
         );
       }
     }
@@ -101,11 +103,11 @@ const PartnerInfoScreen = ({ navigation, route }) => {
       <SafeAreaView style={styles.safeArea}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="arrow-back" size={20} color={Colors.primaryDark} />
+            <Icon name="arrow-back" size={20} color={Colors.primaryDark} />
           </TouchableOpacity>
         </View>
 
@@ -115,22 +117,22 @@ const PartnerInfoScreen = ({ navigation, route }) => {
             {/* Logo and Basic Info */}
             <View style={styles.logoSection}>
               <View style={styles.basicInfo}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={[styles.followButton, isPartnerFollowed(partnerId) && styles.followingButton]}
                   onPress={handleFollowToggle}
                 >
                   <CustomText style={[styles.followText, isPartnerFollowed(partnerId) && styles.followingText]}>
                     {isPartnerFollowed(partnerId) ? 'متابع' : 'متابعة'}
                   </CustomText>
-                  <Ionicons 
-                    name={isPartnerFollowed(partnerId) ? "person" : "person-add"} 
-                    size={12} 
-                    color={isPartnerFollowed(partnerId) ? Colors.primaryDark : Colors.primaryDark} 
+                  <Icon
+                    name={isPartnerFollowed(partnerId) ? "person" : "person-add"}
+                    size={12}
+                    color={isPartnerFollowed(partnerId) ? Colors.primaryDark : Colors.primaryDark}
                   />
                 </TouchableOpacity>
-                
+
                 <View style={styles.ratingContainer}>
-                  <CustomText style={styles.ratingText}>
+                  <CustomText style={[styles.ratingText, { fontFamily: 'AdventPro' }]}>
                     {partner.rating}
                   </CustomText>
                   <View style={styles.starsContainer}>
@@ -139,8 +141,8 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                 </View>
               </View>
               <View style={styles.logoContainer}>
-                <Image 
-                  source={partner.logo} 
+                <Image
+                  source={partner.logo}
                   style={styles.logoImage}
                   resizeMode="cover"
                 />
@@ -170,19 +172,19 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                         {/* Contact Information */}
             <View style={styles.contactContainer}>
               <CustomText style={styles.contactTitle}>معلومات التواصل:</CustomText>
-              
+
               <View style={styles.contactItem}>
                 <CustomText style={styles.contactText}>
-                  {partner.contactInfo.phone}
+                  <CustomText style={{ fontFamily: 'AdventPro' }}>{partner.contactInfo.phone}</CustomText>
                 </CustomText>
-                <Ionicons name="call" size={12} color={Colors.primaryDark} />
+                <Icon name="call" size={12} color={Colors.primaryDark} />
               </View>
-              
+
               <View style={styles.contactItem}>
                 <CustomText style={styles.contactText}>
                   {partner.contactInfo.address}
                 </CustomText>
-                <Ionicons name="location" size={12} color={Colors.primaryDark} />
+                <Icon name="location" size={12} color={Colors.primaryDark} />
               </View>
             </View>
 
@@ -203,14 +205,14 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                       }
                     }}
                   >
-                    <Image 
-                      source={require('../assets/icons/add-item.png')} 
+                    <Image
+                      source={require('../assets/icons/add-item.png')}
                       style={styles.addItemIcon}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Chat', { 
+                  onPress={() => navigation.navigate('Chat', {
                     partner: {
                       ...partner,
                       logoImage: partner.logo,
@@ -218,8 +220,8 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                     }
                   })}
                 >
-                      <Image 
-                        source={require('../assets/icons/chat.png')} 
+                      <Image
+                        source={require('../assets/icons/chat.png')}
                         style={styles.chatIcon}
                         resizeMode="contain"
                       />
@@ -227,8 +229,8 @@ const PartnerInfoScreen = ({ navigation, route }) => {
               </View>
               <View style={styles.galleryGrid}>
                 {partner.gallery.map((item, index) => (
-                  <TouchableOpacity 
-                    key={index} 
+                  <TouchableOpacity
+                    key={index}
                     style={styles.galleryItem}
                     onPress={() => {
                       setSelectedImage(item);
@@ -236,8 +238,8 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                     }}
                   >
                     {item.type === 'image' ? (
-                      <Image 
-                        source={item.source} 
+                      <Image
+                        source={item.source}
                         style={styles.galleryImage}
                         resizeMode="cover"
                       />
@@ -252,13 +254,13 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                           useNativeControls={false}
                         />
                         <View style={styles.playButton}>
-                          <Ionicons name="play" size={20} color={Colors.white} />
+                          <Icon name="play" size={20} color={Colors.white} />
                         </View>
                       </View>
                     )}
-                    
+
                     {/* Heart Icon for Favorites */}
-                    <TouchableOpacity 
+                    <TouchableOpacity
                       style={styles.heartIcon}
                       onPress={(e) => {
                         e.stopPropagation();
@@ -279,10 +281,10 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                         toggleFavorite(favoriteItem);
                       }}
                     >
-                      <Ionicons 
-                        name={isFavorite(`${partnerId}_${index}`, partnerId) ? "heart" : "heart-outline"} 
-                        size={15} 
-                        color={isFavorite(`${partnerId}_${index}`, partnerId) ? "#FF0000" : "#FFFFFF"} 
+                      <Icon
+                        name={isFavorite(`${partnerId}_${index}`, partnerId) ? "heart" : "heart-outline"}
+                        size={15}
+                        color={isFavorite(`${partnerId}_${index}`, partnerId) ? "#FF0000" : "#FFFFFF"}
                       />
                     </TouchableOpacity>
 
@@ -290,7 +292,7 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                     {partner.discount && (
                       <View style={styles.discountTag}>
                         <CustomText style={styles.discountTagText}>
-                          خصم {partner.discount}
+                          خصم <CustomText style={{ fontFamily: 'AdventPro' }}>{partner.discount}</CustomText>
                         </CustomText>
                       </View>
                     )}
@@ -304,9 +306,9 @@ const PartnerInfoScreen = ({ navigation, route }) => {
       </SafeAreaView>
 
       {/* Bottom Tabs */}
-      <BottomTabNavigator 
-        state={{ index: 4 }} 
-        navigation={navigation} 
+      <BottomTabNavigator
+        state={{ index: 4 }}
+        navigation={navigation}
       />
 
       {/* Image Modal */}
@@ -316,20 +318,20 @@ const PartnerInfoScreen = ({ navigation, route }) => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.modalOverlay}
           activeOpacity={1}
           onPress={() => setModalVisible(false)}
         >
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.modalContent}
             activeOpacity={1}
             onPress={(e) => e.stopPropagation()}
           >
             <View style={styles.modalImageContainer}>
               {selectedImage?.type === 'image' ? (
-                <Image 
-                  source={selectedImage.source} 
+                <Image
+                  source={selectedImage.source}
                   style={styles.modalImage}
                   resizeMode="contain"
                 />
@@ -345,11 +347,11 @@ const PartnerInfoScreen = ({ navigation, route }) => {
                 />
               )}
             </View>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Ionicons name="close" size={24} color={Colors.white} />
+              <Icon name="close" size={24} color={Colors.white} />
             </TouchableOpacity>
           </TouchableOpacity>
         </TouchableOpacity>
@@ -366,7 +368,7 @@ const PartnerInfoScreen = ({ navigation, route }) => {
         partnerId={partnerId}
         partnerDiscount={partner.discount}
       />
-      
+
       {/* Car Rental Modal */}
       <CarRentalModal
         visible={carRentalModalVisible}
@@ -378,7 +380,7 @@ const PartnerInfoScreen = ({ navigation, route }) => {
         partnerId={partnerId}
         partnerDiscount={partner.discount}
       />
-      
+
       {/* Party Location Modal */}
       <PartyLocationModal
         visible={partyLocationModalVisible}
@@ -389,7 +391,7 @@ const PartnerInfoScreen = ({ navigation, route }) => {
         partnerId={partnerId}
         partnerDiscount={partner.discount}
       />
-      
+
       {/* Makeup Booking Modal */}
       <MakeupBookingModal
         visible={makeupBookingModalVisible}
@@ -514,7 +516,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     width: '100%',
-  },    
+  },
   partnerName: {
     fontSize: 16,
     fontWeight: 'bold',

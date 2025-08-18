@@ -1,14 +1,17 @@
-import React from 'react';
-import { 
-  View, 
-  StyleSheet, 
-  SafeAreaView, 
+import React, { useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
   TouchableOpacity,
-  ScrollView
+  TextInput,
+  Dimensions,
+  Alert
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
 import CustomText from '../components/CustomText';
-import { Ionicons } from '@expo/vector-icons';
 import BottomTabNavigator from '../components/BottomTabNavigator';
 
 const ReportScreen = ({ navigation }) => {
@@ -37,7 +40,7 @@ const ReportScreen = ({ navigation }) => {
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.faqSection}>
             <CustomText style={styles.faqTitle}>الأسئلة المتكررة</CustomText>
-            
+
             {/* FAQ Questions */}
             <View style={styles.questionsContainer}>
               {faqQuestions.map((question, index) => (
@@ -58,7 +61,7 @@ const ReportScreen = ({ navigation }) => {
             </View>
 
             {/* Ask Different Question Button */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.askQuestionButton}
               onPress={handleAskQuestion}
             >
@@ -71,9 +74,9 @@ const ReportScreen = ({ navigation }) => {
       </SafeAreaView>
 
       {/* Bottom Tabs */}
-      <BottomTabNavigator 
-        state={{ index: 4 }} 
-        navigation={navigation} 
+      <BottomTabNavigator
+        state={{ index: 4 }}
+        navigation={navigation}
       />
     </View>
   );

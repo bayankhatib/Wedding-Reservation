@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,12 +6,17 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  TextInput,
+  Dimensions,
+  Modal,
+  Alert,
+  TextInput
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-import CustomText from '../components/CustomText';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
+import CustomText from '../components/CustomText';
+import { useFavorites } from '../contexts/FavoritesContext';
+import { PartnerDetails } from '../constants/PartnerData';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import BottomTabNavigator from '../components/BottomTabNavigator';
 
 export default function CategoryListScreen() {
@@ -28,6 +33,14 @@ export default function CategoryListScreen() {
     item.location?.toLowerCase().includes(searchText.toLowerCase())
   ) || [];
 
+  // Debug logging
+  console.log('CategoryListScreen Debug:', {
+    searchText,
+    categoryDataLength: categoryData?.length || 0,
+    filteredDataLength: filteredData.length,
+    categoryTitle
+  });
+
   const handleItemPress = (item) => {
     navigation.navigate('PartnerInfo', { partnerId: item.id });
   };
@@ -41,8 +54,8 @@ export default function CategoryListScreen() {
       {/* Left Column - Stats */}
       <View style={styles.statsColumn}>
         <View style={styles.statItem}>
-          <Ionicons name="heart" size={16} color={Colors.red} />
-          <CustomText style={styles.statText}>{item.favoriteCount}</CustomText>
+          <Icon name="heart" size={16} color={Colors.red} />
+          <CustomText style={[styles.statText, { fontFamily: 'AdventPro' }]}>{item.favoriteCount}</CustomText>
         </View>
       </View>
 
@@ -67,7 +80,7 @@ export default function CategoryListScreen() {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.primaryDark} />
+            <Icon name="arrow-back" size={24} color={Colors.primaryDark} />
           </TouchableOpacity>
 
           <CustomText style={styles.headerTitle}>{categoryTitle || 'القائمة'}</CustomText>
@@ -75,19 +88,38 @@ export default function CategoryListScreen() {
           <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchInput}
-              placeholder="البحث..."
+              placeholder="ابحث في القائمة..."
               placeholderTextColor={Colors.textLight}
               value={searchText}
               onChangeText={setSearchText}
+              returnKeyType="search"
+              clearButtonMode="while-editing"
             />
+            {searchText.length > 0 && (
+              <TouchableOpacity 
+                style={styles.clearButton}
+                onPress={() => setSearchText('')}
+              >
+                <Icon name="close-circle" size={20} color={Colors.textLight} />
+              </TouchableOpacity>
+            )}
             <TouchableOpacity style={styles.searchButton}>
-              <Ionicons name="search" size={20} color={Colors.white} />
+              <Icon name="search" size={20} color={Colors.white} />
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Content */}
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          {/* Search Results Counter */}
+          {searchText && (
+            <View style={styles.searchResultsCounter}>
+              <CustomText style={styles.searchResultsText}>
+                تم العثور على {filteredData.length} نتيجة للبحث: "{searchText}"
+              </CustomText>
+            </View>
+          )}
+          
           {filteredData.length > 0 ? (
             <View style={styles.itemsGrid}>
               {filteredData.map(renderItem)}
@@ -101,13 +133,13 @@ export default function CategoryListScreen() {
           )}
         </ScrollView>
       </SafeAreaView>
-
+      
       <BottomTabNavigator 
-       state={{ index: 4 }} 
-       navigation={navigation} 
+        state={{ index: 4 }} 
+        navigation={navigation} 
       />
     </View>
-  );s
+  );
 }
 
 const styles = StyleSheet.create({
@@ -150,11 +182,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 25,
     paddingHorizontal: 15,
+    marginTop: 10,
+    marginHorizontal: 20,
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    minHeight: 50,
   },
   searchInput: {
     flex: 1,
@@ -162,6 +199,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 16,
     color: Colors.textDark,
+    textAlign: 'right',
+    fontFamily: 'AdventPro',
   },
   searchButton: {
     backgroundColor: Colors.primary,
@@ -170,6 +209,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  clearButton: {
+    padding: 5,
   },
   content: {
     flex: 1,
@@ -234,5 +276,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.textLight,
     textAlign: 'center',
+  },
+  searchResultsCounter: {
+    backgroundColor: Colors.primaryLight,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  searchResultsText: {
+    fontSize: 16,
+    color: Colors.primaryDark,
+    fontFamily: 'AdventPro',
   },
 });

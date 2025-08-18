@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import {
   View,
+  StyleSheet,
   Modal,
   TouchableOpacity,
-  StyleSheet,
+  ScrollView,
+  Dimensions,
   TextInput,
+  Alert
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import CustomText from './CustomText';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
+import CustomText from './CustomText';
 
 const BookingProcessModal = ({
   visible,
@@ -81,7 +84,7 @@ const BookingProcessModal = ({
                 }}
               >
                 <CustomText style={styles.monthText}>{month}</CustomText>
-                <CustomText style={styles.yearText}>{currentYear}</CustomText>
+                <CustomText style={[styles.yearText, { fontFamily: 'AdventPro' }]}>{currentYear}</CustomText>
               </TouchableOpacity>
             );
           })}
@@ -96,8 +99,8 @@ const BookingProcessModal = ({
                 setShowMonthView(true);
               }}
             >
-              <CustomText style={styles.monthText}>{month}</CustomText>
-              <CustomText style={styles.yearText}>{currentYear + 1}</CustomText>
+                              <CustomText style={styles.monthText}>{month}</CustomText>
+                <CustomText style={[styles.yearText, { fontFamily: 'AdventPro' }]}>{currentYear + 1}</CustomText>
             </TouchableOpacity>
           ))}
         </View>
@@ -132,7 +135,7 @@ const BookingProcessModal = ({
               setSelectedMonth(null); 
             }}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.primaryDark} />
+            <Icon name="arrow-back" size={24} color={Colors.primaryDark} />
           </TouchableOpacity>
           <CustomText style={styles.monthTitle}>{selectedMonthName}</CustomText>
         </View>
@@ -175,7 +178,8 @@ const BookingProcessModal = ({
                   !isCurrentMonth && styles.otherMonthDayText,
                   isPastDate && styles.pastDayText,
                   isToday && styles.todayText,
-                  isSelected && styles.selectedDayText
+                  isSelected && styles.selectedDayText,
+                  { fontFamily: 'AdventPro' }
                 ]}>
                   {date.getDate()}
                 </CustomText>
@@ -212,7 +216,7 @@ const BookingProcessModal = ({
             // selectedMonth is already preserved, so we can go back to the days calendar
           }}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.primaryDark} />
+          <Icon name="arrow-back" size={24} color={Colors.primaryDark} />
         </TouchableOpacity>
         <CustomText style={styles.pageTitle}>معلومات الدفع</CustomText>
       </View>
@@ -220,7 +224,7 @@ const BookingProcessModal = ({
               <View style={styles.paymentSection}>
           <CustomText style={styles.paymentLabel}>طريقة الدفع</CustomText>
           <View style={styles.paymentMethodContainer}>
-            <Ionicons name="card" size={24} color={Colors.primary} />
+            <Icon name="card" size={24} color={Colors.primary} />
             <TextInput 
               style={styles.paymentMethodInput}
               placeholder="Card"
@@ -275,7 +279,7 @@ const BookingProcessModal = ({
     <View style={styles.pageContainer}>
       <View style={styles.successIconContainer}>
         <View style={styles.successIconCircle}>
-          <Ionicons name="checkmark" size={50} color={Colors.white} />
+          <Icon name="checkmark" size={50} color={Colors.white} />
         </View>
       </View>
       
@@ -288,7 +292,7 @@ const BookingProcessModal = ({
               style={styles.starContainer} 
               onPress={() => setRating(starIndex)}
             >
-              <Ionicons 
+              <Icon 
                 name={starIndex <= rating ? "star" : "star-outline"} 
                 size={30} 
                 color={starIndex <= rating ? "#FFD700" : "#999"} 
@@ -315,7 +319,7 @@ const BookingProcessModal = ({
     <View style={styles.pageContainer}>
       <View style={styles.thankYouIconContainer}>
         <View style={styles.thankYouIconCircle}>
-          <Ionicons name="heart" size={50} color={Colors.white} />
+          <Icon name="heart" size={50} color={Colors.white} />
         </View>
       </View>
       
@@ -352,7 +356,7 @@ const BookingProcessModal = ({
           {!showMonthView && !showPaymentForm && !showSuccessScreen && !showThankYouModal && (
             <View style={styles.modalHeader}>
               <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-                <Ionicons name="close" size={24} color={Colors.primaryDark} />
+                <Icon name="close" size={24} color={Colors.primaryDark} />
               </TouchableOpacity>
               <CustomText style={styles.modalTitle}>تاريخ الحدث</CustomText>
             </View>

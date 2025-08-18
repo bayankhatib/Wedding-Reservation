@@ -1,15 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   StyleSheet,
-  ScrollView,
   Dimensions,
   TouchableOpacity,
   Image,
+  ScrollView,
+  Modal
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import CustomText from './CustomText';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants/Colors';
+import CustomText from './CustomText';
 
 const { width: screenWidth } = Dimensions.get('window');
 

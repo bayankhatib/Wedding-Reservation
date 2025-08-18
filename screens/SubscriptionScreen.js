@@ -10,6 +10,7 @@ import {
 import { Colors } from '../constants/Colors';
 import { SubscriptionData } from '../constants/FakeData';
 import CustomButton from '../components/CustomButton';
+import CustomText from '../components/CustomText';
 
 const SubscriptionScreen = ({ navigation }) => {
   const handleContinue = () => {
@@ -32,7 +33,7 @@ const SubscriptionScreen = ({ navigation }) => {
             </View>
             <View style={styles.planInfo}>
               <Text style={styles.planName}>{SubscriptionData.plan}</Text>
-              <Text style={styles.planDuration}>{SubscriptionData.duration}</Text>
+              <CustomText style={[styles.planDuration, { fontFamily: 'AdventPro' }]}>{SubscriptionData.duration}</CustomText>
             </View>
           </View>
         </View>
@@ -43,17 +44,17 @@ const SubscriptionScreen = ({ navigation }) => {
           
           <View style={styles.paymentItem}>
             <Text style={styles.paymentLabel}>القسط الشهري:</Text>
-            <Text style={styles.paymentValue}>{SubscriptionData.monthlyPayment}</Text>
+            <CustomText style={[styles.paymentValue, { fontFamily: 'AdventPro' }]}>{SubscriptionData.monthlyPayment}</CustomText>
           </View>
           
           <View style={styles.paymentItem}>
             <Text style={styles.paymentLabel}>الأشهر المتبقية:</Text>
-            <Text style={styles.paymentValue}>{SubscriptionData.remainingMonths}</Text>
+            <CustomText style={[styles.paymentValue, { fontFamily: 'AdventPro' }]}>{SubscriptionData.remainingMonths}</CustomText>
           </View>
           
           <View style={styles.paymentItem}>
             <Text style={styles.paymentLabel}>إجمالي المبلغ:</Text>
-            <Text style={styles.paymentValue}>{SubscriptionData.totalAmount}</Text>
+            <CustomText style={[styles.paymentValue, { fontFamily: 'AdventPro' }]}>{SubscriptionData.totalAmount}</CustomText>
           </View>
         </View>
 
