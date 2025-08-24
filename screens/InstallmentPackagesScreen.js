@@ -15,10 +15,32 @@ import { Colors } from '../constants/Colors';
 import CustomText from '../components/CustomText';
 import BottomTabNavigator from '../components/BottomTabNavigator';
 import { getSubscribedPackages } from '../constants/SubscribedPackages';
+import { convertArabicToEnglish, containsArabicNumbers } from '../utils/numberUtils';
 
 const InstallmentPackagesScreen = ({ navigation, route }) => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [subscribedPackages, setSubscribedPackages] = useState([]);
+  
+  // Custom component for numbers with AdventPro font
+  const NumberText = ({ children, style, ...props }) => {
+    const hasNumbers = children && containsArabicNumbers(children.toString());
+    const processedText = hasNumbers ? convertArabicToEnglish(children) : children;
+    const fontFamily = hasNumbers ? 'AdventPro' : 'VIPRawyThin';
+    
+    // Debug logging
+    console.log('NumberText Debug:', {
+      original: children,
+      hasNumbers,
+      processedText,
+      fontFamily
+    });
+    
+    return (
+      <CustomText style={[{ fontFamily }, style]} {...props}>
+        {processedText}
+      </CustomText>
+    );
+  };
   
   // Get all subscribed packages from global constant
   const loadSubscribedPackages = () => {
@@ -47,12 +69,6 @@ const InstallmentPackagesScreen = ({ navigation, route }) => {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <CustomText style={styles.headerTitle}>حزم التقسيط الفعالة</CustomText>
-          <TouchableOpacity 
-            style={styles.refreshButton}
-            onPress={loadSubscribedPackages}
-          >
-            <Icon name="refresh" size={24} color={Colors.primaryDark} />
-          </TouchableOpacity>
         </View>
       </View>
 
@@ -64,7 +80,7 @@ const InstallmentPackagesScreen = ({ navigation, route }) => {
               {/* Installment Duration */}
               <View style={styles.infoSection}>
                 <View style={styles.durationContainer}>
-                  <CustomText style={styles.largeNumber}>{packageData.duration}</CustomText>
+                  <NumberText style={styles.largeNumber}>{packageData.duration}</NumberText>
                   <CustomText style={styles.smallText}>/</CustomText>
                   <CustomText style={styles.descriptionText}>شهر</CustomText>
                 </View>
@@ -73,7 +89,7 @@ const InstallmentPackagesScreen = ({ navigation, route }) => {
 
               {/* Monthly Installment Amount */}
               <View style={styles.infoSection}>
-                <CustomText style={styles.largeNumber}>{packageData.monthlyAmount}</CustomText>
+                <NumberText style={styles.largeNumber}>{packageData.monthlyAmount}</NumberText>
                 <CustomText style={styles.bankName}>
                   {packageData.bankName || 'بنك'}
                 </CustomText>
@@ -82,13 +98,13 @@ const InstallmentPackagesScreen = ({ navigation, route }) => {
               {/* Remaining Months */}
               <View style={styles.infoSection}>
                 <CustomText style={styles.descriptionText}>الأشهر المتبقية</CustomText>
-                <CustomText style={styles.largeNumber}>{packageData.remainingMonths}</CustomText>
+                <NumberText style={styles.largeNumber}>{packageData.remainingMonths}</NumberText>
               </View>
 
               {/* Remaining Installment Amount */}
               <View style={styles.infoSection}>
                 <CustomText style={styles.descriptionText}>المبلغ المتبقي من القسط</CustomText>
-                <CustomText style={styles.largeNumber}>{packageData.remainingAmount.toLocaleString()}</CustomText>
+                <NumberText style={styles.largeNumber}>{packageData.remainingAmount.toLocaleString()}</NumberText>
               </View>
 
               {/* Partner Info */}
@@ -175,7 +191,7 @@ const styles = StyleSheet.create({
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
   },
   backButton: {
@@ -229,6 +245,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryDark,
     lineHeight: 50,
     marginBottom: 5,
+    fontFamily: 'AdventPro', // Default font for numbers
   },
   smallText: {
     fontSize: 20,

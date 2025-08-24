@@ -5,7 +5,7 @@ A comprehensive React Native mobile application for wedding service reservations
 ## 🌟 Features
 
 ### Core Functionality
-- **Partner Discovery**: Browse wedding service providers (venues, photographers, makeup artists, etc.)
+- **Partner Discovery**: Browse wedding service providers (venues, clothes, makeup artists, etc.)
 - **Package Management**: View and subscribe to installment packages
 - **Chat System**: Direct messaging with service partners
 - **Favorites**: Save and manage preferred partners
@@ -16,13 +16,12 @@ A comprehensive React Native mobile application for wedding service reservations
 - 👗 **Fashion & Clothing**: Wedding dresses and suits
 - 🚗 **Transportation**: Car rental services
 - 💄 **Beauty & Makeup**: Professional makeup artists
-- 📸 **Photography**: Wedding photography services
 
 ### User Experience
 - **Arabic Language Support**: Full RTL (Right-to-Left) interface
 - **Modern UI/UX**: Clean, intuitive design with smooth animations
 - **Responsive Design**: Optimized for various screen sizes
-- **Offline Capability**: Core functionality works without internet
+
 
 ## 🚀 Getting Started
 
@@ -38,8 +37,8 @@ A comprehensive React Native mobile application for wedding service reservations
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd "Wedding Reservation First"
+   git clone <the repo url ssh/http>
+   cd "Wedding Reservation"
    ```
 
 2. **Install dependencies**
@@ -96,6 +95,7 @@ A comprehensive React Native mobile application for wedding service reservations
 
 ### Typography
 - **Arabic Font**: VIP Rawy Thin
+- **Number Font**: Advent Pro Regular
 - **Fallback**: System fonts
 - **RTL Support**: Full Arabic text direction
 
@@ -106,15 +106,6 @@ A comprehensive React Native mobile application for wedding service reservations
 
 ## 🔧 Configuration
 
-### Environment Variables
-Create a `.env` file in the root directory:
-```env
-EXPO_PUBLIC_API_URL=your_api_url_here
-EXPO_PUBLIC_APP_NAME=Aseel Wedding Reservation
-```
-
-### Metro Configuration
-The app uses Metro bundler with custom configuration for asset handling and SVG support.
 
 ## 📦 Dependencies
 
@@ -128,22 +119,6 @@ The app uses Metro bundler with custom configuration for asset handling and SVG 
 - `@expo/vector-icons`: Icon library
 - `expo-av`: Video playback
 - `expo-font`: Custom font loading
-
-## 🚀 Deployment
-
-### Building for Production
-```bash
-# iOS
-expo build:ios
-
-# Android
-expo build:android
-```
-
-### App Store Deployment
-1. Configure app.json with proper metadata
-2. Build production version
-3. Submit to App Store Connect / Google Play Console
 
 
 ## 🔄 Version History
